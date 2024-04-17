@@ -92,7 +92,7 @@ func GetPlatform() string {
 
 func GetBinaryName() string {
 	if len(os.Args) == 0 {
-		return "earthly"
+		return "cake"
 	}
 	binPath := os.Args[0] // can't use os.Executable() here; because it will give us earthly if executed via the earth symlink
 	baseName := path.Base(binPath)

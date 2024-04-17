@@ -17,18 +17,13 @@ func NewEarthlyApp(cliInstance *base.CLI, rootApp *subcmd.Root, buildApp *subcmd
 	earthly := common.GetBinaryName()
 	earthlyApp := &EarthlyApp{BaseCLI: cliInstance}
 
-	earthlyApp.BaseCLI.SetAppUsage("The CI/CD framework that runs anywhere!")
+	earthlyApp.BaseCLI.SetAppUsage("Telementry-less 'Earthly' fork")
 	earthlyApp.BaseCLI.SetAppUsageText("\t" + earthly + " [options] <target-ref>\n" +
 		"   \t" + earthly + " [options] --image <target-ref>\n" +
 		"   \t" + earthly + " [options] --artifact <target-ref>/<artifact-path> [<dest-path>]\n" +
 		"   \t" + earthly + " [options] command [command options]\n" +
 		"\n" +
-		"Executes Earthly builds. For more information see https://docs.earthly.dev/docs/earthly-command.\n" +
-		"To get started with using Earthly check out the getting started guide at https://docs.earthly.dev/basics.\n" +
-		"\n" +
-		"For help on build-specific flags try \n" +
-		"\n" +
-		"\t" + earthly + " build --help")
+		"Telemetry-less 'Earthly' fork (https://github.com/Rafflesiaceae/cake).")
 	earthlyApp.BaseCLI.SetAppUseShortOptionHandling(true)
 	earthlyApp.BaseCLI.SetAction(buildApp.Action)
 	earthlyApp.BaseCLI.SetVersion(getVersionPlatform(earthlyApp.BaseCLI.Version(), earthlyApp.BaseCLI.GitSHA(), earthlyApp.BaseCLI.BuiltBy()))
