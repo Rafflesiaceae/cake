@@ -247,7 +247,7 @@ func (cl ConsoleLogger) PrintPhaseFooter(phase string, disabled bool, special st
 
 // PrintSuccess prints the success message.
 func (cl ConsoleLogger) PrintSuccess() {
-	cl.PrintBar(successColor, "🌍 Earthly Build  ✅ SUCCESS", "")
+	cl.PrintBar(successColor, "🍰 Cake Build  ✅ SUCCESS", "")
 }
 
 // PrintFailure prints the failure message.
