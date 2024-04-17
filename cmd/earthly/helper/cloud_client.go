@@ -14,6 +14,9 @@ type CLI interface {
 }
 
 func NewCloudClient(cli CLI, opts ...cloud.ClientOpt) (*cloud.Client, error) {
+	// return dummy cloud.Client
+	return cloud.NewDummyClient(), nil
+
 	cloudClient, err := cloud.NewClient(cli.Flags().CloudHTTPAddr, cli.Flags().CloudGRPCAddr,
 		cli.Flags().CloudGRPCInsecure, cli.Flags().SSHAuthSock, cli.Flags().AuthToken,
 		cli.Flags().AuthJWT, cli.Flags().InstallationName, cli.Flags().RequestID,

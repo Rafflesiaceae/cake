@@ -175,6 +175,24 @@ func NewClient(httpAddr, grpcAddr string, useInsecure bool, agentSockPath, authC
 	return c, nil
 }
 
+// NewDummyClient provides a new dummy Earthly Cloud client that goes nowhere
+func NewDummyClient() *Client {
+	c := &Client{
+		httpAddr:          "",
+		warnFunc:          func(string, ...interface{}) {},
+		debugFunc:         func(string, ...interface{}) {},
+		requestID:         requestID,
+		serverConnTimeout: 0,
+	}
+
+	c.authToken = ""
+	c.authTokenExpiry = time.Now().Add(24 * 365 * time.Hour) // Never expire when using JWT.
+
+	c.logstreamBackoff = 1 * time.Millisecond
+
+	return c
+}
+
 func (c *Client) getRequestID() string {
 	if c.requestID != "" {
 		return c.requestID
