@@ -55,6 +55,8 @@ func (app *EarthlyApp) Run(ctx context.Context, console conslogging.ConsoleLogge
 
 	exitCode := app.run(ctx, os.Args, lastSignal)
 
+	app.BaseCLI.Flags().DisableAnalytics = true
+
 	// app.Cfg will be nil when a user runs `earthly --version`;
 	// however in all other regular commands app.Cfg will be set in app.Before
 	if !app.BaseCLI.Flags().DisableAnalytics && app.BaseCLI.Cfg() != nil && !app.BaseCLI.Cfg().Global.DisableAnalytics {

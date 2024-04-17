@@ -347,7 +347,9 @@ func (a *Build) ActionBuildImp(cliCtx *cli.Context, flagArgs, nonFlagArgs []stri
 	}
 
 	// Output log sharing link after build. Invoked after auto-skip is checked (above).
-	a.cli.AddDeferredFunc(printLinkFn)
+	if doLogstreamUpload {
+		a.cli.AddDeferredFunc(printLinkFn)
+	}
 
 	err = a.cli.InitFrontend(cliCtx)
 	if err != nil {
@@ -950,16 +952,6 @@ func (a *Build) logShareLink(ctx context.Context, cloudClient *cloud.Client, tar
 		return "", false, func() {}
 	}
 
-	if !cloudClient.IsLoggedIn(ctx) {
-		printLinkFn := func() {
-			a.cli.Console().Printf(
-				"🛰️ Reuse cache between CI runs with Earthly Satellites! " +
-					"2-20X faster than without cache. Generous free tier " +
-					"https://cloud.earthly.dev\n")
-		}
-		return "", false, printLinkFn
-	}
-
 	if !a.cli.Flags().LogstreamUpload {
 		// If you are logged in, then add the bundle builder code, and
 		// configure cleanup and post-build messages.
@@ -980,7 +972,7 @@ func (a *Build) logShareLink(ctx context.Context, cloudClient *cloud.Client, tar
 			}
 			a.cli.Console().ColorPrintf(color.New(color.FgHiYellow), "Shareable link: %s\n", id)
 		}
-		return "", false, printLinkFn
+		return "", cloudClient.IsLoggedIn(context.Background()), printLinkFn
 	}
 
 	logstreamURL := fmt.Sprintf("%s/builds/%s", a.cli.CIHost(), a.cli.LogbusSetup().InitialManifest.GetBuildId())
@@ -989,7 +981,7 @@ func (a *Build) logShareLink(ctx context.Context, cloudClient *cloud.Client, tar
 		a.cli.Console().ColorPrintf(color.New(color.FgHiYellow), "View logs at %s\n", logstreamURL)
 	}
 
-	return logstreamURL, true, printLinkFn
+	return logstreamURL, false, printLinkFn
 }
 
 func (a *Build) maybePrintBuildMinutesInfo(cliCtx *cli.Context) {
