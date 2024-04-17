@@ -372,7 +372,7 @@ earthly:
             cmd/earthly/*.go
     SAVE ARTIFACT ./build/tags
     SAVE ARTIFACT ./build/ldflags
-    SAVE ARTIFACT build/$EXECUTABLE_NAME AS LOCAL "build/$GOOS/$GOARCH$VARIANT/$EXECUTABLE_NAME"
+    SAVE ARTIFACT build/$EXECUTABLE_NAME AS LOCAL "build/$GOOS/$GOARCH$VARIANT/cake"
     SAVE IMAGE --cache-from=earthly/earthly:main
 
 # earthly-linux-amd64 builds the earthly artifact  for linux amd64
