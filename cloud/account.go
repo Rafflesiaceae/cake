@@ -169,6 +169,8 @@ func (c *Client) RemoveToken(ctx context.Context, name string) error {
 }
 
 func (c *Client) WhoAmI(ctx context.Context) (string, AuthMethod, bool, error) {
+	return "", "", false, fmt.Errorf("Dummied method for telemetry-less reasons") // @XXX
+
 	email, writeAccess, err := c.ping(ctx)
 	if err != nil {
 		return "", "", false, err
